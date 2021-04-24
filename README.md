@@ -1,2 +1,1 @@
-# practicing_php
-Practicing PHP.
+# Practicing PHP

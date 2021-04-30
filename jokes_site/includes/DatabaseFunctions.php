@@ -48,3 +48,34 @@ function totalJokes($pdo) {
 
     return $jokes -> fetchAll();
  }
+
+ function allAuthors($pdo) {
+     $authors = query($pdo,'SELECT * FROM `author`');
+     return $authors->fetchAll();
+ }
+
+ function deleteAuthor($pdo,$table,$id){
+     $parameters = [':id'=>$id];
+     query($pdo, 'DELETE FROM `author`
+                WHERE `id` =: id',$parameters);
+ }
+
+ function insertAuthor($pdo, $fields){
+     $query = 'INSERT INTO `author` (';
+
+     foreach ($fields as $key => $value) {
+         $query .= '`'.$key.'`';
+     }
+     $query = rtrim($query,',');
+
+     $query .= ') VALUES (';
+
+     foreach ($fields as key => $value){
+         $query .= ':'.$key.',';
+     }
+
+     $query = rtrim($query,',');
+     $query .= ')';
+     $fields = processDates($fields);
+     query($pdo,$query,$fields);
+ }
